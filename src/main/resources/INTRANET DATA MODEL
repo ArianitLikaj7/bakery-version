@@ -1,0 +1,104 @@
+-- User Table
+CREATE TABLE users (
+    user_id BIGSERIAL PRIMARY KEY,
+    person_id INT REFERENCES person_table(person_id),
+    username VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL
+    -- Other user-specific columns
+);
+
+-- Person Table
+CREATE TABLE person_table (
+    person_id BIGSERIAL PRIMARY KEY,
+    first_name VARCHAR(255) NOT NULL,
+    last_name VARCHAR(255) NOT NULL,
+    date_of_birth DATE,
+    contact_info_id INT REFERENCES contact_info_table(contact_info_id),
+    address_id INT REFERENCES address_table(address_id),
+    employment_id INT REFERENCES employment_table(employment_id)
+    -- Other personal information columns
+);
+
+-- ContactInfo Table
+CREATE TABLE contact_info_table (
+    contact_info_id BIGSERIAL PRIMARY KEY,
+    email VARCHAR(255),
+    phone VARCHAR(20)
+    -- Other contact information columns
+);
+
+-- Address Table
+CREATE TABLE address_table (
+    address_id BIGSERIAL PRIMARY KEY,
+    street VARCHAR(255),
+    city VARCHAR(255),
+    state VARCHAR(255),
+    zip_code VARCHAR(10)
+    -- Other address columns
+);
+
+-- Employment Table
+CREATE TABLE employment_table (
+    employment_id BIGSERIAL PRIMARY KEY,
+    start_date DATE,
+    end_date DATE,
+    position_id INT REFERENCES position_table(position_id),
+    unit_id INT REFERENCES unit_table(unit_id)
+    -- Other employment-related columns
+);
+
+-- Unit Table
+CREATE TABLE unit_table (
+    unit_id BIGSERIAL PRIMARY KEY,
+    unit_name VARCHAR(255),
+    organization_id INT REFERENCES organization_table(organization_id)
+    -- Other unit-specific columns
+);
+
+-- Position Table
+CREATE TABLE position_table (
+    position_id BIGSERIAL PRIMARY KEY,
+    position_title VARCHAR(255)
+    -- Other position-specific columns
+);
+
+-- Organization Table
+CREATE TABLE organization_table (
+    organization_id BIGSERIAL PRIMARY KEY,
+    organization_name VARCHAR(255)
+    -- Other organization-specific columns
+);
+CREATE TABLE department_table (
+    department_id BIGSERIAL PRIMARY KEY,
+    department_name VARCHAR(255)
+    -- Other department-specific columns
+);
+
+-- Vacation Table
+CREATE TABLE vacation_table (
+    vacation_id BIGSERIAL PRIMARY KEY,
+    user_id INT REFERENCES users(user_id),
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+    reason VARCHAR(255),
+    -- Other vacation-related columns
+);
+
+-- Salary Table
+CREATE TABLE salary_table (
+    salary_id BIGSERIAL PRIMARY KEY,
+    user_id INT REFERENCES users(user_id),
+    amount NUMERIC(10, 2) NOT NULL,
+    pay_date DATE NOT NULL,
+    -- Other salary-related columns
+);
+
+-- Attendance Table
+CREATE TABLE attendance_table (
+    attendance_id BIGSERIAL PRIMARY KEY,
+    user_id INT REFERENCES users(user_id),
+    attendance_date DATE NOT NULL,
+    status VARCHAR(50) NOT NULL,
+    -- Other attendance-related columns
+);
+
